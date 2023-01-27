@@ -1,0 +1,70 @@
+{% load render_partial %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>پنل کاربری</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/static/css/price-range.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+	<link href="/static/css/main.css" rel="stylesheet">
+	<link href="/static/css/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+</head>
+
+{% block body %}
+ <div class="col-sm-8 header-middle-menu">
+                    <div class="shop-menu pull-right">
+                        <ul class="nav navbar-nav">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_superuser %}
+                                    <li><a href="/admin/"><i class="fa fa-lock"></i> پنل ادمین</a></li>
+
+                                {% endif %}
+                                <li><a href="{% url 'user_panel_dashboard' %}"><i class="fa fa-lock"></i> پنل کاربری</a></li>
+                                <li><a href="{% url 'logout_page' %}"><i class="fa fa-lock"></i> خروج</a></li>
+
+                            {% else %}
+                                <li><a href="{% url 'login_page' %}"><i class="fa fa-lock"></i> ورود</a></li>
+                                <li><a href="{% url 'register_page' %}"><i class="fa fa-lock"></i> ثبت نام</a></li>
+
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+        <div class="mainmenu pull-right">
+            <ul class="nav navbar-nav collapse navbar-collapse">
+                <li><a href="{% url 'room' %}">خـانه</a></li>
+                <li><a href="{% url 'about' %}">درباره ما</a></li>
+
+        </div>
+    <div class="container">
+        <div class="row">
+            {% render_partial 'user_panel_module.views.user_panel_menu_partial' %}
+            <form action="{% url 'edit_user_panel' %}" method="post">
+                <div class="col-md-8">
+                {% csrf_token %}
+                {{ form_edit.as_p }}
+                <button type="submit" class="btn btn-success">ثبت</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
