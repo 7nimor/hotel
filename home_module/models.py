@@ -47,11 +47,3 @@ class Reserved(models.Model):
         verbose_name = 'رزرو'
         verbose_name_plural = 'رزرو شده ها'
 
-
-def check_booking(date_in, date_out):
-    qs = Reserved.objects.filter(
-        date_in__lte=date_in,
-        date_out__gte=date_out,
-    )
-
-    return qs
