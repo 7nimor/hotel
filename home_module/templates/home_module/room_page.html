@@ -61,11 +61,14 @@
                     <li><a href="{% url 'room' %}">خـانه</a></li>
                     <li><a href="{% url 'about' %}">درباره ما</a></li>
 
+
             </div>
+
 
         </div>
 
     </div>
+
 
 </header>
 
@@ -75,34 +78,37 @@
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
+
                     <h2 class="title text-center">اتاق ها</h2>
+
                     {% for rooms in room %}
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
 
-                                        <div class="productinfo text-center">
-                                            <img src="images/shop/product.jpg" alt="">
-                                            <h2>{{ rooms.price }} تومان</h2>
-                                            <p>{{ rooms.title }}</p>
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
 
-                                            <a href="/{{ rooms.id }}" class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>
-                                                جزییات</a>
+                                    <div class="productinfo text-center">
+                                        <img src="images/shop/product.jpg" alt="">
+                                        <h2>{{ rooms.price }} تومان</h2>
+                                        <p>{{ rooms.title }}</p>
 
-                                            {% if rooms.is_bb %}
-                                                <p>همراه با صبحانه</p>
+                                        <a href="/{{ rooms.id }}" class="btn btn-default add-to-cart"><i
+                                                class="fa fa-shopping-cart"></i>
+                                            جزییات</a>
 
-                                            {% endif %}
+                                        {% if rooms.is_bb %}
+                                            <p>همراه با صبحانه</p>
+
+                                        {% endif %}
 
 
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
 
-                        {% endfor %}
+                            </div>
+                        </div>
+
+                    {% endfor %}
 
 
                 </div>

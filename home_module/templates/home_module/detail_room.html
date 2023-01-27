@@ -124,17 +124,16 @@
 
                                     <div class="row form-group">
                                         {% if detail_room.Reservation is False %}
-                                        <div class="col-md-12">
-                                            <input type="submit" class="btn btn-primary btn-block" value="رزرو">
-                                        </div>
+                                            <div class="col-md-12">
+                                                <input type="submit" class="btn btn-primary btn-block" value="رزرو">
+                                            </div>
                                         {% else %}
                                             <h4>این اتاق رزرو شده است</h4>
                                         {% endif %}
 
                                     </div>
                                 </form>
-                                <br>
-                                <br>
+
                                 <br>
                                 <h4>{{ detail_room.description }}</h4>
                                 {% if detail_room.title.is_bb %}

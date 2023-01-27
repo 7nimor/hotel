@@ -23,8 +23,7 @@ class DetailRoom(models.Model):
     title = models.ForeignKey(HotelRoom, on_delete=models.CASCADE, verbose_name='عنوان')
     description = models.TextField(verbose_name='توضیحات')
     image = models.ImageField(verbose_name='عکس', upload_to='room/', null=True, blank=True)
-    date_in = models.DateField(verbose_name='تاریخ ورود', null=True, blank=True)
-    date_out = models.DateField(verbose_name='تاریخ خروج', null=True, blank=True)
+
     Reservation = models.BooleanField(verbose_name='رزرو شده/ نشده', null=True)
 
     def __str__(self):
@@ -40,7 +39,6 @@ class Reserved(models.Model):
     user = models.ForeignKey(User, related_name='user_booking', on_delete=models.CASCADE, verbose_name='شخص')
     date_in = models.DateField(verbose_name='تاریخ ورود', null=True)
     date_out = models.DateField(verbose_name='تاریخ خروج', null=True)
-    is_Reservation = models.BooleanField(verbose_name='رزرو شده/ نشده', null=True, default=False)
 
     def __str__(self):
         return str(self.room)

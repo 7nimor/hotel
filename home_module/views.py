@@ -29,7 +29,7 @@ def detail_room(request, detail):
             room_hotel.Reservation = True
             room_hotel.save()
             Reserved.objects.create(room=hotel, user=request.user, date_in=checkin
-                                    , date_out=checkout, is_Reservation=True)
+                                    , date_out=checkout)
 
             return redirect(reverse('secsos'))
         else:
