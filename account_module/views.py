@@ -1,7 +1,5 @@
 from django.contrib.auth import login
-from django.http import Http404
 from django.shortcuts import render, redirect
-from user_panel_module.forms import EditUserForm
 # Create your views here.
 from django.urls import reverse
 from django.views import View

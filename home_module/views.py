@@ -9,18 +9,6 @@ from account_module.models import User
 from home_module.models import HotelRoom, DetailRoom, Reserved
 
 
-def check_booking(date_in, date_out, room_count):
-    qs = Reserved.objects.filter(
-        date_in__lte=date_in,
-        date_out__gte=date_out,
-    )
-
-    if len(qs) >= room_count:
-        return False
-
-    return True
-
-
 def RoomView(request):
     room = HotelRoom.objects.all()
     context = {
@@ -37,9 +25,7 @@ def detail_room(request, detail):
         hotel = DetailRoom.objects.get(pk=detail)
         user = User.objects.filter(id=request.user.id)
         if user:
-            if not check_booking(checkin, checkout, detail):
-                messages.warning(request, 'اتاق قبلا رزرو شده است')
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
             room_hotel.Reservation = True
             room_hotel.save()
             Reserved.objects.create(room=hotel, user=request.user, date_in=checkin
