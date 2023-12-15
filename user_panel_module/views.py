@@ -69,9 +69,3 @@ def user_panel_menu_partial(request: HttpRequest):
     return render(request, 'componet/user_panel_partial.html')
 
 
-def about_us(request):
-    about = Staff.objects.all()
-    context = {
-        'about_us': about
-    }
-    return render(request, 'user_panel_module/user_panel_dashboard.html', context)

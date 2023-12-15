@@ -1,9 +1,8 @@
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
-# Create your views here.
 from django.urls import reverse
 from django.views import View
-
+from django.views.generic import ListView
 from account_module.forms import RegisterForm, LoginForm
 from account_module.models import User, Staff
 
@@ -70,9 +69,6 @@ class LoginView(View):
         return render(request, 'account_module/login.html', context)
 
 
-def staff(request):
-    staff = Staff.objects.all()
-    context = {
-        'staff': staff
-    }
-    return render(request, 'account_module/about.html', context)
+class StaffView(ListView):
+    template_name = 'account_module/about.html'
+    model = Staff
