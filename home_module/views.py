@@ -1,7 +1,5 @@
-from django.contrib.auth import logout
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
-from django.views import View
+
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from home_module.models import HotelRoom, DetailRoom, Reserved
 
@@ -29,9 +27,6 @@ class ReservedView(CreateView):
         return super().form_valid(form)
 
 
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return redirect(reverse('room'))
+
 
 

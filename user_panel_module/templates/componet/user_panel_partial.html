@@ -1,7 +1,5 @@
-<header>
-
-</header>
-
+{% extends 'base.html' %}
+{% block body %}
 
 <div class="col-md-4 pull-right">
     <ul class="list-group">
@@ -12,5 +10,7 @@
         <li class="list-group-item">
             <a href="{% url 'change_pass_user' %}">تغیر کلمه عبور</a>
         </li>
-
+    </ul>
 </div>
+{% endblock %}
+

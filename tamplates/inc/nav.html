@@ -11,7 +11,7 @@
 
                     {% endif %}
                     <li><a href="{% url 'user_panel_dashboard' %}"><i class="fa fa-lock"></i> پنل کاربری</a></li>
-                    <li><a href="{% url 'home:logout_page' %}"><i class="fa fa-lock"></i> خروج</a></li>
+                    <li><a href="{% url 'register:logout_page' %}"><i class="fa fa-lock"></i> خروج</a></li>
 
                 {% else %}
                     <li><a href="{% url 'register:login_page' %}"><i class="fa fa-lock"></i> ورود</a></li>
