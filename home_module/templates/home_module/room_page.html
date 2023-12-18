@@ -20,7 +20,7 @@
                                         <h2>{{ rooms.price }} تومان</h2>
                                         <p>{{ rooms.title }}</p>
 
-                                        <a href="/{{ rooms.id }}" class="btn btn-default add-to-cart"><i
+                                        <a href="{% url 'home:detail_room' rooms.id %}" class="btn btn-default add-to-cart"><i
                                                 class="fa fa-shopping-cart"></i>
                                             جزییات</a>
 

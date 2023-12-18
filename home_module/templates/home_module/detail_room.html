@@ -1,74 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<title>جزییات اتاق</title>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/static/css/prettyPhoto.css" rel="stylesheet">
-    <link href="/static/css/price-range.css" rel="stylesheet">
-    <link href="/static/css/animate.css" rel="stylesheet">
-    <link href="/static/css/main.css" rel="stylesheet">
-    <link href="/static/css/responsive.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="/static/js/html5shiv.js"></script>
-    <script src="/static/js/respond.min.js"></script>
-    <![endif]-->
-    <link rel="shortcut icon" href="/static/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="/static/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="/static/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72"
-          href="/static/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="/static/images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head--></head>
+{% extends 'base.html' %}
+{% block body %}
 
-<body>
-<header>
-    <div class="col-sm-8 header-middle-menu">
-        <div class="shop-menu pull-right">
-            <ul class="nav navbar-nav">
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_superuser %}
-                        <li><a href="/admin"><i class="fa fa-lock"></i> پنل ادمین</a></li>
-
-
-
-                    {% endif %}
-                    <li><a href="{% url 'user_panel_dashboard' %}"><i class="fa fa-lock"></i> پنل کاربری</a></li>
-                    <li><a href="{% url 'logout_page' %}"><i class="fa fa-lock"></i> خروج</a></li>
-
-                {% else %}
-                    <li><a href="{% url 'login_page' %}"><i class="fa fa-lock"></i> ورود</a></li>
-                    <li><a href="{% url 'register_page' %}"><i class="fa fa-lock"></i> ثبت نام</a></li>
-
-
-
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-    <div class="col-sm-9">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="mainmenu pull-right">
-            <ul class="nav navbar-nav collapse navbar-collapse">
-                <li><a href="{% url 'room' %}">خـانه</a></li>
-                <li><a href="{% url 'about' %}">درباره ما</a></li>
-
-        </div>
-    </div>
-</header>
 <section>
     <div class="container">
         <div class="row">
@@ -77,7 +9,7 @@
                 <div class="product-details"><!--product-details-->
                     <div class="col-sm-5">
                         <div class="view-product">
-                            <img src="{{ detail_room.image.url }}" alt="" width="330" height="300">
+                            <img src="{{ object.image.url }}" alt="" width="330" height="300">
                         </div>
 
                         <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -98,45 +30,52 @@
                         <div class="product-information"><!--/product-information-->
                             <img src="/static/images/product-details/new.png" class="newarrival" alt="">
                             <div>
-                                <h2>{{ detail_room.title }}</h2>
+                                <h2>{{ object.title }}</h2>
                             </div>
                             <div>
 									<span>
-										<span>{{ detail_room.title.price }} تومان </span>
+										<span>{{ object.title.price }} تومان </span>
 									</span>
 
-                                <form method="post">
-                                    {% csrf_token %}
-                                    <div class="row form-group">
-                                        <div class="col-md-12">
-                                            <label for="mintopay">تاریخ ورود</label>
-                                            <p>
-                                                <input type="date" name="checkin" id="checkin" class="form-control">
-                                            </p>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="maxtopay">تاریخ خروجی</label>
-                                            <p>
-                                                <input type="date" name="checkout" id="checkout" class="form-control">
-                                            </p>
-                                        </div>
-                                    </div>
+
+
+
+{#                                <form method="post">#}
+{#                                    {% csrf_token %}#}
+{#                                    <div class="row form-group">#}
+{#                                        <div class="col-md-12">#}
+{#                                            <label for="mintopay">تاریخ ورود</label>#}
+{#                                            <p>#}
+{#                                                <input type="date" name="checkin" id="checkin" class="form-control">#}
+{#                                            </p>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-12">#}
+{#                                            <label for="maxtopay">تاریخ خروجی</label>#}
+{#                                            <p>#}
+{#                                                <input type="date" name="checkout" id="checkout" class="form-control">#}
+{#                                            </p>#}
+{#                                        </div>#}
+{#                                    </div>#}
 
                                     <div class="row form-group">
-                                        {% if detail_room.Reservation is False %}
-                                            <div class="col-md-12">
-                                                <input type="submit" class="btn btn-primary btn-block" value="رزرو">
-                                            </div>
-                                        {% else %}
-                                            <h4>این اتاق رزرو شده است</h4>
-                                        {% endif %}
-
+                                        <form action="{% url 'home:reserved' object.id %}" method="post">
+                                            {% csrf_token %}
+                                            {% if object.Reservation is False %}
+                                                <div class="col-md-12">
+                                                    <input type="submit" class="btn btn-primary btn-block" value="رزرو">
+                                                </div>
+                                            {% else %}
+                                                <h4>این اتاق رزرو شده است</h4>
+                                            {% endif %}
+                                        </form>
                                     </div>
-                                </form>
+
+{#                                </form>#}
 
                                 <br>
-                                <h4>{{ detail_room.description }}</h4>
-                                {% if detail_room.title.is_bb %}
+
+                                <h4>{{ object.description }}</h4>
+                                {% if object.title.is_bb %}
                                     <p>همراه با صبحانه</p>
 
 
@@ -158,5 +97,4 @@
         </div>
     </div>
 </section>
-</body>
-</html>
+{% endblock %}

@@ -1,12 +1,9 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView
-
-from account_module.models import User
+from django.views.generic import ListView, DetailView, CreateView
 from home_module.models import HotelRoom, DetailRoom, Reserved
-
 
 
 class RoomView(ListView):
@@ -14,29 +11,22 @@ class RoomView(ListView):
     model = HotelRoom
 
 
+class DetailRoomView(DetailView):
+    template_name = 'home_module/detail_room.html'
+    model = DetailRoom
 
-def detail_room(request, detail):
-    room_hotel = DetailRoom.objects.get(pk=detail)
-    if request.method == 'POST':
-        checkin = request.POST.get('checkin')
-        checkout = request.POST.get('checkout')
-        hotel = DetailRoom.objects.get(pk=detail)
-        user = User.objects.filter(id=request.user.id)
-        if user:
 
-            room_hotel.Reservation = True
-            room_hotel.save()
-            Reserved.objects.create(room=hotel, user=request.user, date_in=checkin
-                                    , date_out=checkout)
+class ReservedView(CreateView):
+    template_name = 'home_module/reserved.html'
+    model = Reserved
+    fields = ['date_in', 'date_out']
+    success_url = reverse_lazy('home:secsos')
 
-            return redirect(reverse('secsos'))
-        else:
-            return redirect(reverse('register_page'))
-    context = {
-        'detail_room': room_hotel,
-    }
-
-    return render(request, 'home_module/detail_room.html', context)
+    def form_valid(self, form, *args, **kwargs):
+        reserved = form.save(commit=False)
+        reserved.user = self.request.user
+        reserved.room = DetailRoom.objects.get(id=self.kwargs['pk'])
+        return super().form_valid(form)
 
 
 class LogoutView(View):
@@ -45,5 +35,3 @@ class LogoutView(View):
         return redirect(reverse('room'))
 
 
-def secsos(request):
-    return render(request, 'home_module/seccsos.html')

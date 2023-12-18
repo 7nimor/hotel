@@ -1,14 +1,22 @@
 from django import forms
-from django.conf.global_settings import DATE_INPUT_FORMATS
-from django.core.exceptions import ValidationError
-from django.utils.datetime_safe import date
+from django.forms import HiddenInput
 
 
 class RoomForm(forms.Form):
     date_in = forms.DateField(
-        widget=forms.SelectDateWidget(),
+        widget=forms.widgets.DateInput(
+            attrs={
+                'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)',
+                'class': 'form-control'
+                }
+            ),
         label='تاریخ ورود',
     )
     date_out = forms.DateField(
-        widget=forms.SelectDateWidget(),
+        widget=forms.widgets.DateInput(
+            attrs={
+                'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)',
+                'class': 'form-control'
+            }
+        ),
         label='تاریخ خروج', )
