@@ -3,9 +3,9 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from account_module.models import User, Staff
 from home_module.models import HotelRoom
 from user_panel_module.forms import EditUserForm, ChangePasswordUserForm
@@ -15,29 +15,23 @@ class UserPanelDashboard(TemplateView):
     template_name = 'user_panel_module/user_panel_dashboard.html'
 
 
-class EditUserProfilePage(View):
-    def get(self, request: HttpRequest):
-        current_user = User.objects.filter(id=request.user.id).first()
-        form_edit = EditUserForm(instance=current_user)
-        context = {
-            'form_edit': form_edit
-        }
-        return render(request, 'user_panel_module/edit_user.html', context)
+class EditUserProfilePage(UpdateView):
+    template_name = 'user_panel_module/edit_user.html'
+    model = User
+    fields = ['first_name', 'last_name', 'National_Id', 'phone_number', 'city', 'State']
+    success_url = reverse_lazy('home:room')
 
-    def post(self, request: HttpRequest):
-        current_user = User.objects.filter(id=request.user.id).first()
-        form_edit = EditUserForm(request.POST, instance=current_user)
-        if form_edit.is_valid():
-            form_edit.save()
-            return redirect(reverse('room'))
-        context = {
-            'form_edit': form_edit
-        }
-        return render(request, 'user_panel_module/edit_user.html', context)
+
+# class ChangePasswordUser(UpdateView):
+#     template_name = 'user_panel_module/change_password_page.html'
+#     model = User
+#     # form_class = ChangePasswordUserForm()
+#     fields = ['password']
+#     success_url = reverse_lazy('home:room')
 
 
 class ChangePasswordUser(View):
-    def get(self, request):
+    def get(self, request,pk):
         form_change = ChangePasswordUserForm()
         context = {
             'change_pass': form_change
@@ -45,10 +39,10 @@ class ChangePasswordUser(View):
 
         return render(request, 'user_panel_module/change_password_page.html', context)
 
-    def post(self, request: HttpRequest):
+    def post(self, request: HttpRequest,pk):
         form_change = ChangePasswordUserForm(request.POST)
         if form_change.is_valid():
-            current_user: User = User.objects.filter(id=request.user.id).first()
+            current_user: User = User.objects.filter(id=pk).first()
             old_pass = form_change.cleaned_data.get('old_password')
             if current_user.check_password(old_pass):
                 new_pass = form_change.cleaned_data.get('password')
@@ -65,7 +59,6 @@ class ChangePasswordUser(View):
         return render(request, 'user_panel_module/change_password_page.html', context)
 
 
+
 def user_panel_menu_partial(request: HttpRequest):
     return render(request, 'componet/user_panel_partial.html')
-
-

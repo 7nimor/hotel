@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load render_partial %}
 {% block body %}
-
+    {% render_partial 'user_panel_module.views.user_panel_menu_partial' %}
 {% endblock %}

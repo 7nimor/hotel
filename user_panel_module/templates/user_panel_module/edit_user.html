@@ -3,13 +3,12 @@
 
     <div class="container">
         <div class="row">
-            {% render_partial 'user_panel_module.views.user_panel_menu_partial' %}
-            <form action="{% url 'edit_user_panel' %}" method="post">
+            <form action="" method="post">
                 <div class="col-md-8">
                     {% csrf_token %}
                     <h4>وارد کردن تمام مقادیر اجباری است</h4>
 
-                    {{ form_edit.as_p }}
+                    {{ form.as_p }}
                     <button type="submit" class="btn btn-success">ثبت</button>
                 </div>
             </form>
